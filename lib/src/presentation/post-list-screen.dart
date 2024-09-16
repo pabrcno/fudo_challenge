@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fudo_interview/src/api/post-api.dart';
-
+import 'package:fudo_interview/src/api/user-api.dart';
 import 'package:fudo_interview/src/models/post/post.dart';
+import 'package:fudo_interview/src/models/user/user.dart';
 import 'package:fudo_interview/src/presentation/create-post-screen.dart';
 import 'package:fudo_interview/src/presentation/post-detail-screen.dart';
 
@@ -13,13 +16,72 @@ class PostsListScreen extends StatefulWidget {
 }
 
 class _PostsListScreenState extends State<PostsListScreen> {
-  final PostApi _postApi = PostApi();
+  final _postApi = PostApi();
+  final _userApi = UserApi();
   late Future<List<Post>> _postsFuture;
-
+  List<Post> _posts = [];
+  List<Post> _filteredPosts = [];
+  final _searchController = TextEditingController();
+  Timer? _debounce;
   @override
   void initState() {
     super.initState();
     _postsFuture = _postApi.getPosts();
+    _postsFuture.then((posts) {
+      setState(() {
+        _posts = posts;
+        _filteredPosts = posts;
+      });
+    });
+
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    // Implement debounce to reduce API calls
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () async {
+      // Filter the posts based on the search query
+      String query = _searchController.text.trim();
+
+      if (query.isEmpty) {
+        // If the search query is empty, display all posts
+        setState(() {
+          _filteredPosts = _posts;
+        });
+      } else {
+        // Fetch users whose names match the query
+        final List<User> users = await _userApi.getUsersByName(query);
+
+        // Get a set of user IDs from the fetched users
+        final Set<int> userIds = users.map((user) => user.id).toSet();
+
+        // Filter posts where the post's userId is in the userIds set
+        setState(() {
+          _filteredPosts =
+              _posts.where((post) => userIds.contains(post.userId)).toList();
+        });
+      }
+    });
+  }
+
+  Future<void> _refreshPosts() async {
+    // Refresh the posts list
+    _postsFuture = _postApi.getPosts();
+    List<Post> posts = await _postsFuture;
+    setState(() {
+      _posts = posts;
+      _filteredPosts = posts;
+    });
+    _onSearchChanged();
   }
 
   @override
@@ -27,43 +89,48 @@ class _PostsListScreenState extends State<PostsListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Posts List'),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _searchController,
+              decoration: const InputDecoration(
+                hintText: 'Search posts by Author Name...',
+                border: OutlineInputBorder(),
+                fillColor: Colors.white,
+                prefixIcon: Icon(Icons.search),
+              ),
+            ),
+          ),
+        ),
       ),
-      body: FutureBuilder<List<Post>>(
-        future: _postsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            // While the future is loading
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            // If there was an error
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            // If the data is empty
-            return const Center(child: Text('No posts found.'));
-          } else {
-            // If the future completed successfully with data
-            final posts = snapshot.data!;
-            return ListView.builder(
-              itemCount: posts.length,
-              itemBuilder: (context, index) {
-                final post = posts[index];
-                return ListTile(
-                  title: Text(post.title),
-                  subtitle: Text('User ID: ${post.userId}'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PostDetailScreen(postId: post.id),
-                      ),
-                    );
-                  },
-                );
-              },
-            );
-          }
-        },
-      ),
+      body: _posts.isEmpty
+          ? const Center(child: CircularProgressIndicator())
+          : RefreshIndicator(
+              onRefresh: _refreshPosts,
+              child: _filteredPosts.isEmpty
+                  ? const Center(child: Text('No posts found.'))
+                  : ListView.builder(
+                      itemCount: _filteredPosts.length,
+                      itemBuilder: (context, index) {
+                        final post = _filteredPosts[index];
+                        return ListTile(
+                          title: Text(post.title),
+                          subtitle: Text('User ID: ${post.userId}'),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    PostDetailScreen(postId: post.id),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Navigate to CreatePostScreen
@@ -74,9 +141,7 @@ class _PostsListScreenState extends State<PostsListScreen> {
             ),
           ).then((_) {
             // Refresh the list after returning from CreatePostScreen
-            setState(() {
-              _postsFuture = _postApi.getPosts();
-            });
+            _refreshPosts();
           });
         },
         child: const Icon(Icons.add),
