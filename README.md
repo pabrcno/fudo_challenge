@@ -31,7 +31,7 @@ Sample posts listing app, with cache management using [sqflite](https://pub.dev/
 
 ## Other works:
 
-### Flutter
+### Flutter/Dart
 
 - Topics (chat app, complex state management, sockets, flutter devops): https://github.com/pabrcno/topics
 - Topics Backend (dart backend using 🐸): https://github.com/pabrcno/chat_be
