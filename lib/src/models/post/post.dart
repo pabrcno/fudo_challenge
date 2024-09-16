@@ -4,8 +4,8 @@ part 'post.mapper.dart';
 
 @MappableClass()
 class Post with PostMappable {
-  final int id;
   final int userId;
+  final int id;
   final String title;
   final String body;
 
