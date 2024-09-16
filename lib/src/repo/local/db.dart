@@ -25,7 +25,7 @@ class DB {
   Future<Database> _initDatabase() async {
     // Get the default databases location
     String databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'my_database_2.db');
+    String path = join(databasesPath, 'my_database_1.db');
 
     // Open the database, creating it if it doesn't exist
     return await openDatabase(

@@ -5,8 +5,6 @@ import 'package:sqflite/sqflite.dart';
 class PostLocalDataSource {
   final db = DB.instance;
 
-  PostLocalDataSource();
-
   Future<void> cachePosts(List<Post> posts) async {
     final batch = (await db.database).batch();
     for (var post in posts) {
