@@ -38,7 +38,7 @@ class UserApi {
       List<User> users = (response.data as List)
           .map((user) => UserMapper.fromMap(user))
           .toList();
-
+      // If there are no users, do cache search
       if (users.isEmpty) {
         users.addAll(await _cache.getCachedUsersByName(name));
       }
