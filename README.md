@@ -20,7 +20,7 @@ flutter run
 
 ### About Project
 
-Sample posts listing app, with cache management using [https://pub.dev/packages/sqflite](sqflite), [https://pub.dev/packages/dio](dio) and simple widget state management.
+Sample posts listing app, with cache management using [sqflite](https://pub.dev/packages/sqflite), [dio](https://pub.dev/packages/dio) and simple widget state management.
 
 ### Folder Structure
 
