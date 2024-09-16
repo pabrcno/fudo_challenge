@@ -26,35 +26,6 @@ class UserApi {
     }
   }
 
-  // Fetch a single User by ID
-  Future<User> getUser(int id) async {
-    try {
-      Response response = await _api.dio.get('/users/$id');
-      return UserMapper.fromJson(response.data);
-    } on DioException catch (e) {
-      if (e.type == DioExceptionType.connectionError ||
-          e.type == DioExceptionType.connectionTimeout) {
-        return await _cache.getCachedUserById(id);
-      }
-      rethrow;
-    } catch (e) {
-      throw Exception('Failed to load User: $e');
-    }
-  }
-
-  // Create a new User
-  Future<User> createUser(User user) async {
-    try {
-      Response response = await _api.dio.post(
-        '/users',
-        data: user.toJson(),
-      );
-      return UserMapper.fromMap(response.data);
-    } catch (e) {
-      throw Exception('Failed to create User: $e');
-    }
-  }
-
   Future<List<User>> getUsersByName(String name) async {
     try {
       // NOTE: The api does not have an endpoint for partial search.

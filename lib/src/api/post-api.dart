@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:fudo_interview/src/api/api-service.dart';
 import 'package:fudo_interview/src/models/post/post.dart';
@@ -50,10 +52,8 @@ class PostApi {
         '/posts',
         data: post.toJson(),
       );
-      final newPosts = await getPosts();
-
-      await _cache.cachePosts(newPosts);
-      return PostMapper.fromJson(response.data);
+      final newPost = PostMapper.fromMap(response.data);
+      return newPost;
     } catch (e) {
       throw Exception('Failed to create post: $e');
     }
