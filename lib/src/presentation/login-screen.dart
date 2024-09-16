@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
         title: const Text('Login'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Form(
           key: _formKey,
           child: Column(
@@ -59,9 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
               // Username Field
               TextFormField(
                 controller: _usernameController,
-                decoration: const InputDecoration(
-                  labelText: 'Username',
-                ),
+                decoration:
+                    const InputDecoration(labelText: 'Username', filled: true),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter username';
@@ -73,9 +72,8 @@ class _LoginScreenState extends State<LoginScreen> {
               // Password Field
               TextFormField(
                 controller: _passwordController,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                ),
+                decoration:
+                    const InputDecoration(labelText: 'Password', filled: true),
                 obscureText: true, // Hide the password input
                 validator: (value) {
                   if (value == null || value.isEmpty) {

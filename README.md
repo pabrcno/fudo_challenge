@@ -4,26 +4,47 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application that follows the
-[simple app state management
-tutorial](https://flutter.dev/to/state-management-sample).
+You can download the APK on the releases section.
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-## Assets
+### Run Project
 
-The `assets` directory houses images, fonts, and any other files you want to
-include with your application.
+```
+flutter pub add
+dart pub run build_runner build
+flutter run
+```
 
-The `assets/images` directory contains [resolution-aware
-images](https://flutter.dev/to/resolution-aware-images).
+### About Project
 
-## Localization
+Sample posts listing app, with cache management using [https://pub.dev/packages/sqflite](sqflite), [https://pub.dev/packages/dio](dio) and simple widget state management.
 
-This project generates localized messages based on arb files found in
-the `lib/src/localization` directory.
+### Folder Structure
 
-To support additional languages, please visit the tutorial on
-[Internationalizing Flutter apps](https://flutter.dev/to/internationalization).
+- api - Calls to external sources.
+- repo - Calls to local storage.
+- models - Definitions used across the app
+- presentation - App screens and Components
+
+## Other works:
+
+### Flutter
+
+- Topics (chat app, complex state management, sockets, flutter devops): https://github.com/pabrcno/topics
+- Topics Backend (dart backend using 🐸): https://github.com/pabrcno/chat_be
+- Swap it (trade app, complex logic): https://github.com/pabrcno/swapIt
+
+### Typescript
+
+#### Art and fun:
+
+- LEspaceGO (lego 3D space adventure): https://github.com/pabrcno/LEspaceGO
+- not-lego (3D web "realistic" legos): https://github.com/pabrcno/not-lego
+- react 👐 (get your hands into a 3D browser): https://github.com/pabrcno/react-hands
+
+#### Apps
+
+- dobli (fullstack project integrating AI): https://github.com/pabrcno/dobli

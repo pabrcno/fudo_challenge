@@ -93,7 +93,7 @@ class _PostsListScreenState extends State<PostsListScreen> {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(15.0),
             child: TextField(
               controller: _searchController,
               decoration: const InputDecoration(
