@@ -26,6 +26,7 @@ class _PostsListScreenState extends State<PostsListScreen> {
   @override
   void initState() {
     super.initState();
+    _userApi.getUsers();
     _postsFuture = _postApi.getPosts();
     _postsFuture.then((posts) {
       setState(() {
