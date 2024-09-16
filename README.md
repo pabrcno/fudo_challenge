@@ -13,7 +13,7 @@ samples, guidance on mobile development, and a full API reference.
 ### Run Project
 
 ```
-flutter pub add
+flutter packages get
 dart pub run build_runner build
 flutter run
 ```

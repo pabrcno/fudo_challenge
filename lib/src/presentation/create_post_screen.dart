@@ -45,6 +45,9 @@ class CreatePostScreenState extends State<CreatePostScreen> {
 
     try {
       await _postApi.createPost(newPost);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Post created')),
+      );
       Navigator.pop(context, true); // Return true to indicate success
     } catch (e) {
       // Handle error
