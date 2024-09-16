@@ -6,10 +6,10 @@ class CreatePostScreen extends StatefulWidget {
   const CreatePostScreen({super.key});
 
   @override
-  _CreatePostScreenState createState() => _CreatePostScreenState();
+  CreatePostScreenState createState() => CreatePostScreenState();
 }
 
-class _CreatePostScreenState extends State<CreatePostScreen> {
+class CreatePostScreenState extends State<CreatePostScreen> {
   final _postApi = PostApi();
   final _formKey = GlobalKey<FormState>();
   final _userIdController = TextEditingController();

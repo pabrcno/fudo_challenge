@@ -12,10 +12,10 @@ class PostsListScreen extends StatefulWidget {
   const PostsListScreen({super.key});
 
   @override
-  _PostsListScreenState createState() => _PostsListScreenState();
+  PostsListScreenState createState() => PostsListScreenState();
 }
 
-class _PostsListScreenState extends State<PostsListScreen> {
+class PostsListScreenState extends State<PostsListScreen> {
   final _postApi = PostApi();
   final _userApi = UserApi();
   late Future<List<Post>> _postsFuture;

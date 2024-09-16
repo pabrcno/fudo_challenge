@@ -8,10 +8,10 @@ class PostDetailScreen extends StatefulWidget {
   const PostDetailScreen({super.key, required this.postId});
 
   @override
-  _PostDetailScreenState createState() => _PostDetailScreenState();
+  PostDetailScreenState createState() => PostDetailScreenState();
 }
 
-class _PostDetailScreenState extends State<PostDetailScreen> {
+class PostDetailScreenState extends State<PostDetailScreen> {
   final PostApi _postApi = PostApi();
   late Future<Post> _postFuture;
 
