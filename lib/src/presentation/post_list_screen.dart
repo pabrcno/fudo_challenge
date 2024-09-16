@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:fudo_interview/src/api/post-api.dart';
-import 'package:fudo_interview/src/api/user-api.dart';
+import 'package:fudo_interview/src/api/post_api.dart';
+import 'package:fudo_interview/src/api/user_api.dart';
 import 'package:fudo_interview/src/models/post/post.dart';
 import 'package:fudo_interview/src/models/user/user.dart';
-import 'package:fudo_interview/src/presentation/create-post-screen.dart';
-import 'package:fudo_interview/src/presentation/post-detail-screen.dart';
+import 'package:fudo_interview/src/presentation/create_post_screen.dart';
+import 'package:fudo_interview/src/presentation/post_detail_screen.dart';
 
 class PostsListScreen extends StatefulWidget {
   const PostsListScreen({super.key});

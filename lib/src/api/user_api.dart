@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:fudo_interview/src/api/api-service.dart';
+import 'package:fudo_interview/src/api/api_service.dart';
 import 'package:fudo_interview/src/models/user/user.dart';
-import 'package:fudo_interview/src/repo/local/user-local.dart';
+import 'package:fudo_interview/src/repo/local/user_local.dart';
 
 class UserApi {
   final ApiService _api = ApiService();

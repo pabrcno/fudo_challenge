@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:fudo_interview/src/api/api-service.dart';
+import 'package:fudo_interview/src/api/api_service.dart';
 import 'package:fudo_interview/src/models/post/post.dart';
-import 'package:fudo_interview/src/repo/local/post-local.dart';
+import 'package:fudo_interview/src/repo/local/post_local.dart';
 
 class PostApi {
   final ApiService _api = ApiService();

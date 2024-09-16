@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fudo_interview/src/presentation/post-list-screen.dart';
+import 'package:fudo_interview/src/presentation/post_list_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

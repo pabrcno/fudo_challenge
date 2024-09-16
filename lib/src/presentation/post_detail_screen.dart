@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fudo_interview/src/api/post-api.dart';
+import 'package:fudo_interview/src/api/post_api.dart';
 import 'package:fudo_interview/src/models/post/post.dart';
 
 class PostDetailScreen extends StatefulWidget {
