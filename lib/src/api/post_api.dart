@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:fudo_interview/src/api/api_service.dart';
 import 'package:fudo_interview/src/models/post/post.dart';
@@ -23,8 +25,9 @@ class PostApi {
           e.type == DioExceptionType.connectionTimeout) {
         return await _cache.getCachedPosts();
       }
-      rethrow;
+      return [];
     } catch (e) {
+      log(e.toString());
       throw Exception('Failed to load post: $e');
     }
   } // Fetch a single post by ID
@@ -39,6 +42,7 @@ class PostApi {
       Response response = await _api.dio.get('/posts/$id');
       return PostMapper.fromJson(response.data);
     } catch (e) {
+      log(e.toString());
       throw Exception('Failed to load post: $e');
     }
   }

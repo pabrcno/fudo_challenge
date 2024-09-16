@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:fudo_interview/src/api/api_service.dart';
 import 'package:fudo_interview/src/models/user/user.dart';
@@ -20,8 +22,9 @@ class UserApi {
           e.type == DioExceptionType.connectionTimeout) {
         return await _cache.getCachedUsers();
       }
-      rethrow;
+      return [];
     } catch (e) {
+      log(e.toString());
       throw Exception('Failed to load Users: $e');
     }
   }
@@ -41,6 +44,7 @@ class UserApi {
       }
       return users;
     } catch (e) {
+      log(e.toString());
       throw Exception('Failed to create User: $e');
     }
   }

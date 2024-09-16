@@ -24,7 +24,7 @@ Sample posts listing app, with cache management using [sqflite](https://pub.dev/
 
 ### Folder Structure
 
-Warning: This app structure was developed with KISS standards, no dependency injection, functional approach, complex routing, complex state management nor fancy UI will be found on this repo. If you wanna see more complex apps check other works below.
+Warning: This app structure was developed with KISS standards, little to none dependency injection, functional approach, complex routing, complex state management nor fancy UI will be found on this repo. If you wanna see more complex apps check other works below.
 
 - api - Calls to external sources.
 - repo - Calls to local storage.

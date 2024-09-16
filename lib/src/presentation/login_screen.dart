@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fudo_interview/src/api/post_api.dart';
+import 'package:fudo_interview/src/api/user_api.dart';
 import 'package:fudo_interview/src/presentation/post_list_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -26,7 +28,11 @@ class LoginScreenState extends State<LoginScreen> {
       // Navigate to PostsListScreen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const PostsListScreen()),
+        MaterialPageRoute(
+            builder: (context) => PostsListScreen(
+                  postApi: PostApi(),
+                  userApi: UserApi(),
+                )),
       );
     } else {
       // Show error message

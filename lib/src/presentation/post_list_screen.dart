@@ -9,25 +9,27 @@ import 'package:fudo_interview/src/presentation/create_post_screen.dart';
 import 'package:fudo_interview/src/presentation/post_detail_screen.dart';
 
 class PostsListScreen extends StatefulWidget {
-  const PostsListScreen({super.key});
+  final PostApi postApi;
+  final UserApi userApi;
+  const PostsListScreen(
+      {super.key, required this.postApi, required this.userApi});
 
   @override
   PostsListScreenState createState() => PostsListScreenState();
 }
 
 class PostsListScreenState extends State<PostsListScreen> {
-  final _postApi = PostApi();
-  final _userApi = UserApi();
   late Future<List<Post>> _postsFuture;
   List<Post> _posts = [];
   List<Post> _filteredPosts = [];
   final _searchController = TextEditingController();
   Timer? _debounce;
+
   @override
   void initState() {
     super.initState();
-    _userApi.getUsers();
-    _postsFuture = _postApi.getPosts();
+    widget.userApi.getUsers();
+    _postsFuture = widget.postApi.getPosts();
     _postsFuture.then((posts) {
       setState(() {
         _posts = posts;
@@ -40,6 +42,9 @@ class PostsListScreenState extends State<PostsListScreen> {
 
   @override
   void dispose() {
+    if (_debounce?.isActive ?? false) {
+      _debounce!.cancel();
+    }
     // Clean up the controller when the widget is disposed.
     _searchController.removeListener(_onSearchChanged);
     _searchController.dispose();
@@ -58,25 +63,26 @@ class PostsListScreenState extends State<PostsListScreen> {
         setState(() {
           _filteredPosts = _posts;
         });
-      } else {
-        // Fetch users whose names match the query
-        final List<User> users = await _userApi.getUsersByName(query);
-
-        // Get a set of user IDs from the fetched users
-        final Set<int> userIds = users.map((user) => user.id).toSet();
-
-        // Filter posts where the post's userId is in the userIds set
-        setState(() {
-          _filteredPosts =
-              _posts.where((post) => userIds.contains(post.userId)).toList();
-        });
+        return;
       }
+
+      // Fetch users whose names match the query
+      final List<User> users = await widget.userApi.getUsersByName(query);
+
+      // Get a set of user IDs from the fetched users
+      final Set<int> userIds = users.map((user) => user.id).toSet();
+
+      // Filter posts where the post's userId is in the userIds set
+      setState(() {
+        _filteredPosts =
+            _posts.where((post) => userIds.contains(post.userId)).toList();
+      });
     });
   }
 
   Future<void> _refreshPosts() async {
     // Refresh the posts list
-    _postsFuture = _postApi.getPosts();
+    _postsFuture = widget.postApi.getPosts();
     List<Post> posts = await _postsFuture;
     setState(() {
       _posts = posts;
