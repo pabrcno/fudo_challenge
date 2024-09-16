@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:fudo_interview/src/api/api-service.dart';
 import 'package:fudo_interview/src/models/post/post.dart';
