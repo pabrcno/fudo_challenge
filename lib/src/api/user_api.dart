@@ -43,6 +43,12 @@ class UserApi {
         users.addAll(await _cache.getCachedUsersByName(name));
       }
       return users;
+    } on DioException catch (e) {
+      if (e.type == DioExceptionType.connectionError ||
+          e.type == DioExceptionType.connectionTimeout) {
+        return await _cache.getCachedUsersByName(name);
+      }
+      return [];
     } catch (e) {
       log(e.toString());
       throw Exception('Failed to create User: $e');
