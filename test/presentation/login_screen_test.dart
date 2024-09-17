@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fudo_interview/src/presentation/post_list_screen.dart';
 import 'package:fudo_interview/src/presentation/login_screen.dart';
 import 'package:mockito/mockito.dart';
 
